@@ -450,12 +450,18 @@ class Stream extends AbstractNonZeroStream implements HeaderEmitter {
                 break;
             }
             case "priority": {
-                try {
+            try {
                     Priority p = Priority.parsePriority(new StringReader(value));
                     setUrgency(p.getUrgency());
                     setIncremental(p.getIncremental());
                 } catch (IOException ioe) {
                     // Not possible with StringReader
+                } catch (IllegalArgumentException iae) {
+                    // Invalid priority header field values should be ignored
+                    if (log.isTraceEnabled()) {
+                        log.trace(sm.getString("http2Parser.processFramePriorityUpdate.invalid", getConnectionId(),
+                                getIdAsString()), iae);
+                    }
                 }
                 break;
             }
