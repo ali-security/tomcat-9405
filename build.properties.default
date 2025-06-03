@@ -31,7 +31,7 @@ version.major=10
 version.minor=1
 version.build=39
 version.patch=1
-version.suffix=sp2
+version.suffix=+sp2
 version.dev=-dev
 
 # ----- Build tools -----
